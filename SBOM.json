@@ -16,6 +16,20 @@
           "id": "GPL-2.0-only"
         }
       ]
-    }
+    },
+    {
+    "type": "Snippet",
+    "publisher": "scanoss",
+    "version": "1.3.3",
+    "purl": "pkg:github/scanoss/scanner.c",
+    "licenses": [
+      {
+        "id": "GPL-2.0-or-later"
+      },
+      {
+        "id": "GPL-2.0-only"
+      }
+    ]
+  }
   ]
 }
