@@ -1,0 +1,21 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.2",
+  "version": 1,
+  "components": [
+    {
+      "type": "Snippet",
+      "publisher": "scanoss",
+      "version": "4.3.2",
+      "purl": "pkg:github/scanoss/engine",
+      "licenses": [
+        {
+          "id": "GPL-2.0-or-later"
+        },
+        {
+          "id": "GPL-2.0-only"
+        }
+      ]
+    }
+  ]
+}
