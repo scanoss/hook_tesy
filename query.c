@@ -161,3 +161,90 @@ int get_component_age(uint8_t *md5)
 
 	return age;
 }
+
+
+
+
+
+#include "attributions.h"
+#include "debug.h"
+#include "file.h"
+#include "help.h"
+#include "ignorelist.h"
+#include "license.h"
+#include "limits.h"
+#include "mz.h"
+#include "parse.h"
+#include "report.h"
+#include "scan.h"
+#include "scanoss.h"
+#include "util.h"
+
+struct ldb_table oss_url;
+struct ldb_table oss_file;
+struct ldb_table oss_wfp;
+struct ldb_table oss_purl;
+struct ldb_table oss_copyright;
+struct ldb_table oss_quality;
+struct ldb_table oss_vulnerability;
+struct ldb_table oss_dependency;
+struct ldb_table oss_license;
+struct ldb_table oss_attribution;
+struct ldb_table oss_cryptography;
+component_item *ignore_components;
+component_item *declared_components;
+
+/* File tracing -qi */
+uint8_t trace_id[MD5_LEN];
+bool trace_on;
+
+/* Initialize tables for the DB name indicated (defaults to oss) */
+void initialize_ldb_tables(char *name)
+{
+	char oss_db_name[MAX_ARGLN];
+
+	if (name) strcpy(oss_db_name, name);
+	else strcpy(oss_db_name, DEFAULT_OSS_DB_NAME);
+
+	strcpy(oss_url.db, oss_db_name);
+	strcpy(oss_url.table, "url");
+	oss_url.key_ln = 16;
+	oss_url.rec_ln = 0;
+	oss_url.ts_ln = 2;
+	oss_url.tmp = false;
+
+	strcpy(oss_file.db, oss_db_name);
+	strcpy(oss_file.table, "file");
+	oss_file.key_ln = 16;
+	oss_file.rec_ln = 0;
+	oss_file.ts_ln = 2;
+	oss_file.tmp = false;
+
+	strcpy(oss_wfp.db, oss_db_name);
+	strcpy(oss_wfp.table, "wfp");
+	oss_wfp.key_ln = 4;
+	oss_wfp.rec_ln = 18;
+	oss_wfp.ts_ln = 2;
+	oss_wfp.tmp = false;
+
+	strcpy(oss_purl.db, oss_db_name);
+	strcpy(oss_purl.table, "purl");
+	oss_purl.key_ln = 16;
+	oss_purl.rec_ln = 0;
+	oss_purl.ts_ln = 2;
+	oss_purl.tmp = false;
+
+	strcpy(oss_copyright.db, oss_db_name);
+	strcpy(oss_copyright.table, "copyright");
+	oss_copyright.key_ln = 16;
+	oss_copyright.rec_ln = 0;
+	oss_copyright.ts_ln = 2;
+	oss_copyright.tmp = false;
+
+	strcpy(oss_quality.db, oss_db_name);
+	strcpy(oss_quality.table, "quality");
+	oss_quality.key_ln = 16;
+	oss_quality.rec_ln = 0;
+	oss_quality.ts_ln = 2;
+	oss_quality.tmp = false;
+
