@@ -299,6 +299,31 @@ void print_licenses(match_data match)
     ]).pipe(map(([http, csp, externalUrl]) => new HttpConfig(http, csp, externalUrl)));
     const shutdownTimeout$ = this.config$.pipe(map(({ shutdownTimeout }) => shutdownTimeout));
     this.httpServer = new HttpServer(logger, 'Kibana', shutdownTimeout$);
-    this.httpsRedirectServer = new HttpsRedirectServer(logger.get('http', 'redirect', 'server'));
+    this.h
+	    
+	ttpsRedirectServer = new HttpsRedirectServer(logger.get('http', 'redirect', 'server'));
   }
+
+/* Remove invalid characters from a license name */
+void clean_license(char *license)
+{
+	char *c = license;
+	char byte[2] = "\0\0";
+	while (*c)
+	{
+		/* Only first word is kept */
+		if (*c == ' ')
+		{
+			*c = 0;
+			break;
+		}
+		*byte = *c;
+		if (!isalnum(*byte) && !strstr("-+;:.", byte))
+			memmove(c, c + 1, strlen(c));
+		else c++;
+	}
+}
+
+
+
 
