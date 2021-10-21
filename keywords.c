@@ -319,4 +319,48 @@ void keyword_analysis(match_data *matches)
 	select_match(matches, kwlist);
 
 	free(kwlist);
+	
+	
+	
+	
+	
+
+{
+
+	char *ptr = path;
+	char *start = path;
+	int length = strlen(word);
+	
+	/* Search for the last slash to delimit the basepath */
+	int len = strlen(path);
+	for (; len > 0; len--) if (path[len - 1] == '/') break;
+
+	while (*ptr && ptr < (path + len))
+	{
+		if (!isalnum(*ptr))
+		{
+			int word_len = ptr - start;
+			if (word_len == length) if (!memcmp(word, start, word_len)) return true; 
+			start = ptr + 1;
+		}
+		ptr++;
+	}
+
+	return false;
+}
+
+/* Breaks a basepath into keywords and adds them to the list */
+void add_keywords(struct keywords *kwlist, char *path)
+{
+	const int min_word = 4;
+	const int max_word = 1024;
+	char *ptr = path;
+	char *start = path;
+	
+	/* Search for the last slash to delimit the basepath */
+	int len = strlen(path);
+	for (; len > 0; len--) if (path[len - 1] == '/') break;
+
+	while (*ptr && ptr < (path + len))
+	{	
 }
