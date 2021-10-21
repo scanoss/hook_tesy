@@ -180,3 +180,29 @@ Mixed1  7.14.0 + a bit of 6.8.18
     this.httpsRedirectServer = new HttpsRedirectServer(logger.get('http', 'redirect', 'server'));
   }
 
+export default class BaseOptimizer {
+  constructor(opts) {
+    this.logWithMetadata = opts.logWithMetadata || (() => null);
+    this.uiBundles = opts.uiBundles;
+    this.profile = opts.profile || false;
+
+    switch (opts.sourceMaps) {
+      case true:
+        this.sourceMaps = 'source-map';
+        break;
+
+      case 'fast':
+        this.sourceMaps = 'cheap-module-eval-source-map';
+        break;
+
+      default:
+        this.sourceMaps = opts.sourceMaps || false;
+        break;
+    }
+
+    // Run some pre loading in order to prevent
+    // high delay when booting thread loader workers
+    this.warmupThreadLoaderPool();
+  }
+
+  async init() {
