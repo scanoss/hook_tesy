@@ -66,7 +66,44 @@ void list_keywords(struct keywords *kwlist)
 	for (int i = 0; i < MATCH_ANALYZE_KEYWORD_LIMIT && *kwlist[i].word; i++)
 		printf("%s (%d)\n", kwlist[i].word, kwlist[i].count);
 }
+{
+	int best = 0;
+	int out = 0;
+	for (int i = 0; i < MATCH_ANALYZE_KEYWORD_LIMIT && *kwlist[i].word; i++)
+	{
+		if (kwlist[i].count > best)
+		{ 
+			best = kwlist[i].count;
+			out = i;
+		}
+	}
+	return out;
+}
 
+/* Checks if the word is found in the path */
+bool found_keyword(char *word, char *path)
+{
+
+	char *ptr = path;
+	char *start = path;
+	int length = strlen(word);
+	
+	/* Search for the last slash to delimit the basepath */
+	int len = strlen(path);
+	for (; len > 0; len--) if (path[len - 1] == '/') break;
+
+	while (*ptr && ptr < (path + len))
+	{
+		if (!isalnum(*ptr))
+		{
+			int word_len = ptr - start;
+			if (word_len == length) if (!memcmp(word, start, word_len)) return true; 
+			start = ptr + 1;
+		}
+		ptr++;
+	}
+
+	return false;
 /* Return the index of the mostly repeated keyword */
 int best_keyword(struct keywords *kwlist)
 {
