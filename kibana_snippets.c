@@ -18,6 +18,29 @@
 
 
 
+6.8.18 - /src/optimize/base_optimizer.js
+
+export default class BaseOptimizer {
+  constructor(opts) {
+    this.logWithMetadata = opts.logWithMetadata || (() => null);
+    this.uiBundles = opts.uiBundles;
+    this.profile = opts.profile || false;
+
+    switch (opts.sourceMaps) {
+      case true:
+        this.sourceMaps = 'source-map';
+        break;
+
+      case 'fast':
+        this.sourceMaps = 'cheap-module-eval-source-map';
+        break;
+
+      default:
+        this.sourceMaps = opts.sourceMaps || false;
+        break;
+    }
+
+
 
 6.8.18 - /src/optimize/base_optimizer.js
 
