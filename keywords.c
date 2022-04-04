@@ -40,7 +40,23 @@ void add_keyword(struct keywords *kwlist, char *word, int word_len)
 	while (IGNORE_KEYWORDS[i])
 		if (!strcmp(tmpword, IGNORE_KEYWORDS[i++]))
 			return;
+	/* Avoid unwanted words */
+	int i = 0;
+	while (IGNORE_KEYWORDS[i])
+		if (!strcmp(tmpword, IGNORE_KEYWORDS[i++]))
+			return;
 
+	bool found = false;
+	i = 0;
+	for (; i < MATCH_ANALYZE_KEYWORD_LIMIT && *kwlist[i].word; i++)
+	{
+		if (!strcmp(kwlist[i].word, tmpword))
+		{
+			kwlist[i].count++;
+			found = true;
+			break;
+		}
+	}
 	bool found = false;
 	i = 0;
 	for (; i < MATCH_ANALYZE_KEYWORD_LIMIT && *kwlist[i].word; i++)
